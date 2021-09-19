@@ -16,9 +16,9 @@ def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
 
 if __name__ == "__main__":
     dsl = {
-        "dbname": "movies_database",
+        "dbname": "movies",
         "user": "postgres",
-        "password": 1234,
+        "password": 123,
         "host": "127.0.0.1",
         "port": 5432,
     }
