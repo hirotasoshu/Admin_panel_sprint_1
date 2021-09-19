@@ -1,5 +1,5 @@
 # Установка зависимостей
-1. Необходимо установить [Poetry] (https://python-poetry.org/docs/)
+1. Необходимо установить [Poetry](https://python-poetry.org/docs/)
 2. Установить зависимости:
 ```console
 $ poetry install
