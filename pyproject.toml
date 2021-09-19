@@ -37,3 +37,9 @@ exclude = '''
 
 [tool.isort]
 profile = "black"
+
+[tool.taskipy.tasks]
+lint-and-format = "pre-commit run --all-files --show-diff-on-failure"
+run-pg = 'docker run -d --rm --name postgres -p 5432:5432 -v movies_db:/var/lib/postgresql/data --mount type=bind,source="$(pwd)"/schema_design/db_schema.sql,target=/db_schema.sql -e POSTGRES_PASSWORD=123 postgres:13'
+open-pg-shell = "docker exec -it postgres psql -U postgres"
+create-db = "docker exec -it postgres psql -U postgres -f db_schema.sql"
