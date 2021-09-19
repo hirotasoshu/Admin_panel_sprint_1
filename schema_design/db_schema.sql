@@ -7,7 +7,7 @@ CREATE DATABASE movies;
 -- создание схемы content
 CREATE SCHEMA content;
 
--- создание enum типа type
+-- создание enum типа film_type
 CREATE TYPE film_type AS ENUM ('movie', 'tv_show');
 
 -- создание таблицы film_work
