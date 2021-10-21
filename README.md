@@ -12,6 +12,7 @@ $ poetry run pre-commit install
 ```console
 $ poetry run task lint-and-format
 ```
+4. Создать .env файл на основе .env.example
 
 # schema_design
 1. Запуск PG:
