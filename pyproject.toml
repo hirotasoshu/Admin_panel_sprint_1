@@ -7,6 +7,7 @@ authors = ["Maksim Zayakin <rasetsu@list.ru>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 psycopg2-binary = "^2.9.1"
+python-dotenv = "^0.19.1"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
@@ -42,5 +43,5 @@ profile = "black"
 [tool.taskipy.tasks]
 lint-and-format = "pre-commit run --all-files --show-diff-on-failure"
 run-pg = 'docker run -d --rm --name postgres -p 5432:5432 -v movies_db:/var/lib/postgresql/data --mount type=bind,source="$(pwd)"/schema_design/db_schema.sql,target=/db_schema.sql --env-file ./.env postgres:13'
-open-pg-shell = "docker exec -it postgres psql -U postgres"
-create-db = "docker exec -it postgres psql -U postgres -f db_schema.sql"
+open-pg-shell = "docker exec -it postgres bash -c 'psql -U ${POSTGRES_USER}'"
+create-db = "docker exec -it postgres bash -c 'psql -U ${POSTGRES_USER} -f db_schema.sql'"
