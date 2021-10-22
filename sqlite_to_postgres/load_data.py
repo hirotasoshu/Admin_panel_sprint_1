@@ -1,6 +1,9 @@
+import logging
+import os
 import sqlite3
 
 import psycopg2
+from dotenv import load_dotenv
 from psycopg2.extensions import connection as _connection
 from psycopg2.extras import DictCursor
 
@@ -15,12 +18,18 @@ def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
 
 
 if __name__ == "__main__":
+    load_dotenv()
+    logging.basicConfig(
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        level=logging.INFO,
+    )
     dsl = {
-        "dbname": "movies",
-        "user": "postgres",
-        "password": 123,
-        "host": "127.0.0.1",
-        "port": 5432,
+        "dbname": os.getenv("DB_NAME", "movies"),
+        "user": os.getenv("POSTGRES_USER", "postgres"),
+        "password": os.getenv("POSTGRES_PASSWORD", 123),
+        "host": os.getenv("DB_HOST", "127.0.0.1"),
+        "port": int(os.getenv("DB_PORT", 5432)),
+        "options": "-c search_path=content",
     }
     with sqlite3.connect("db.sqlite") as sqlite_conn, psycopg2.connect(
         **dsl, cursor_factory=DictCursor
