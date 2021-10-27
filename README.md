@@ -27,3 +27,10 @@ $ poetry run task create-db
 ```console
 $ poetry run task open-pg-shell
 ```
+
+# sqlite_to_postgres
+1. Запустить скрипт миграции данных:
+
+```console
+$ poetry run task sqlite-to-postgres
+```
