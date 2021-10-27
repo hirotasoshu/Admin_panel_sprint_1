@@ -1,8 +1,18 @@
-from dataclasses import dataclass, field
+from dataclasses import astuple, dataclass, field
 from datetime import date, datetime
 from enum import Enum
-from typing import Optional
+from typing import Any, Dict, Iterator, Optional, Tuple, TypeVar
 from uuid import UUID
+
+T = TypeVar("T", bound="Table")
+Data = Dict[str, Iterator[T]]
+
+
+@dataclass
+class Table:
+    @property
+    def values(self) -> Tuple[Any, ...]:
+        return astuple(self)
 
 
 class FilmType(str, Enum):
@@ -17,7 +27,7 @@ class PersonRole(str, Enum):
 
 
 @dataclass
-class FilmWork:
+class FilmWork(Table):
     __slots__ = (
         "id",
         "title",
@@ -30,17 +40,18 @@ class FilmWork:
     )
     id: UUID
     title: str
-    creation_date: Optional[date] = None
-    certificate: Optional[str] = None
-    file_path: Optional[str] = None
-    rating: Optional[float] = None
-    type: Optional[FilmType] = None
+    description: Optional[str]
+    creation_date: Optional[date]
+    certificate: Optional[str]
+    file_path: Optional[str]
+    rating: Optional[float]
+    type: Optional[FilmType]
     created_at: datetime = field(default_factory=datetime.utcnow)
     updated_at: datetime = field(default_factory=datetime.utcnow)
 
 
 @dataclass
-class Genre:
+class Genre(Table):
     __slots__ = (
         "id",
         "name",
@@ -48,13 +59,13 @@ class Genre:
     )
     id: UUID
     name: str
-    description: Optional[str] = None
+    description: Optional[str]
     created_at: datetime = field(default_factory=datetime.utcnow)
     updated_at: datetime = field(default_factory=datetime.utcnow)
 
 
 @dataclass
-class GenreFilmWork:
+class GenreFilmWork(Table):
     __slots__ = (
         "id",
         "film_work_id",
@@ -67,7 +78,7 @@ class GenreFilmWork:
 
 
 @dataclass
-class Person:
+class Person(Table):
     __slots__ = (
         "id",
         "full_name",
@@ -75,13 +86,13 @@ class Person:
     )
     id: UUID
     full_name: str
-    birth_date: Optional[date] = None
+    birth_date: Optional[date]
     created_at: datetime = field(default_factory=datetime.utcnow)
     updated_at: datetime = field(default_factory=datetime.utcnow)
 
 
 @dataclass
-class PersonFilmWork:
+class PersonFilmWork(Table):
     __slots__ = (
         "id",
         "film_work_id",
@@ -91,5 +102,5 @@ class PersonFilmWork:
     id: UUID
     film_work_id: UUID
     person_id: UUID
-    role: Optional[PersonRole] = None
+    role: Optional[PersonRole]
     created_at: datetime = field(default_factory=datetime.utcnow)
