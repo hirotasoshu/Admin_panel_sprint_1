@@ -12,6 +12,7 @@ $ poetry run pre-commit install
 ```console
 $ poetry run task lint-and-format
 ```
+4. Создать .env файл на основе .env.example
 
 # schema_design
 1. Запуск PG:
@@ -25,4 +26,11 @@ $ poetry run task create-db
 3. Зайти в PG shell:
 ```console
 $ poetry run task open-pg-shell
+```
+
+# sqlite_to_postgres
+1. Запустить скрипт миграции данных:
+
+```console
+$ poetry run task sqlite-to-postgres
 ```

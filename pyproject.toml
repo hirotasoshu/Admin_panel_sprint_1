@@ -6,6 +6,8 @@ authors = ["Maksim Zayakin <rasetsu@list.ru>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+psycopg2-binary = "^2.9.1"
+python-dotenv = "^0.19.1"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
@@ -13,6 +15,7 @@ taskipy = "^1.8.2"
 isort = "^5.9.3"
 flake8 = "^3.9.2"
 pre-commit = "^2.15.0"
+mypy = "^0.910"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -38,8 +41,29 @@ exclude = '''
 [tool.isort]
 profile = "black"
 
+[tool.mypy]
+python_version = "3.9"
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unreachable = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+strict_optional = true
+strict_equality = true
+implicit_reexport = false
+show_error_context = true
+pretty = true
+show_traceback = true
+scripts_are_modules = true
+ignore_missing_imports = true
+
 [tool.taskipy.tasks]
 lint-and-format = "pre-commit run --all-files --show-diff-on-failure"
-run-pg = 'docker run -d --rm --name postgres -p 5432:5432 -v movies_db:/var/lib/postgresql/data --mount type=bind,source="$(pwd)"/schema_design/db_schema.sql,target=/db_schema.sql -e POSTGRES_PASSWORD=123 postgres:13'
-open-pg-shell = "docker exec -it postgres psql -U postgres"
-create-db = "docker exec -it postgres psql -U postgres -f db_schema.sql"
+run-pg = 'docker run -d --rm --name postgres -p 5432:5432 -v movies_db:/var/lib/postgresql/data --mount type=bind,source="$(pwd)"/schema_design/db_schema.sql,target=/db_schema.sql --env-file ./.env postgres:13'
+open-pg-shell = "docker exec -it postgres bash -c 'psql -U ${POSTGRES_USER}'"
+create-db = "docker exec -it postgres bash -c 'psql -U ${POSTGRES_USER} -f db_schema.sql'"
+sqlite-to-postgres = "cd sqlite_to_postgres && python load_data.py"
