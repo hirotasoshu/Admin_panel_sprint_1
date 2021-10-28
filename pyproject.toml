@@ -61,6 +61,9 @@ show_traceback = true
 scripts_are_modules = true
 ignore_missing_imports = true
 
+[tool.pyright]
+executionEnvironments = [{root = "sqlite_to_postgres"}]
+
 [tool.taskipy.tasks]
 lint-and-format = "pre-commit run --all-files --show-diff-on-failure"
 run-pg = 'docker run -d --rm --name postgres -p 5432:5432 -v movies_db:/var/lib/postgresql/data --mount type=bind,source="$(pwd)"/schema_design/db_schema.sql,target=/db_schema.sql --env-file ./.env postgres:13'
