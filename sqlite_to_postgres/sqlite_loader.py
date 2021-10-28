@@ -10,8 +10,8 @@ class SQLiteLoader:
         self.cursor = self.connection.cursor()
 
     def _load_table(self, table_name: str, table_model: Type[T]) -> Iterator[T]:
-        for data in self.cursor.execute(f"SELECT * from {table_name}"):
-            yield table_model(*data)
+        for row in self.cursor.execute(f"SELECT * from {table_name}"):
+            yield table_model(*row)
 
     def load_movies(self) -> Data:
         movies = {}
