@@ -120,7 +120,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "birth_day",
+                    "birth_date",
                     models.DateField(
                         blank=True, null=True, verbose_name="Дата рождения"
                     ),

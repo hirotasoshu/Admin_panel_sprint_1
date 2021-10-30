@@ -69,7 +69,7 @@ class Person(CreatedUpdatedAtIDMixin):
     full_name = models.CharField(
         _("Полное имя"), validators=[MinLengthValidator(3)], max_length=255
     )
-    birth_day = models.DateField(_("Дата рождения"), null=True, blank=True)
+    birth_date = models.DateField(_("Дата рождения"), null=True, blank=True)
 
     class Meta:
         verbose_name = _("Личность")
