@@ -8,6 +8,8 @@ authors = ["Maksim Zayakin <rasetsu@list.ru>"]
 python = "^3.9"
 psycopg2-binary = "^2.9.1"
 python-dotenv = "^0.19.1"
+Django = "^3.2.8"
+gunicorn = "^20.1.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
@@ -16,6 +18,8 @@ isort = "^5.9.3"
 flake8 = "^3.9.2"
 pre-commit = "^2.15.0"
 mypy = "^0.910"
+django-debug-toolbar = "^3.2.2"
+django-stubs = "^1.9.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -60,6 +64,14 @@ pretty = true
 show_traceback = true
 scripts_are_modules = true
 ignore_missing_imports = true
+plugins = ["mypy_django_plugin.main"]
+
+[[tool.mypy.overrides]]
+module = "*.migrations.*"
+ignore_errors = true
+
+[tool.django-stubs]
+django_settings_module = "config.settings.dev"
 
 [tool.pyright]
 executionEnvironments = [{root = "sqlite_to_postgres"}]
@@ -70,3 +82,7 @@ run-pg = 'docker run -d --rm --name postgres -p 5432:5432 -v movies_db:/var/lib/
 open-pg-shell = "docker exec -it postgres bash -c 'psql -U ${POSTGRES_USER}'"
 create-db = "docker exec -it postgres bash -c 'psql -U ${POSTGRES_USER} -f db_schema.sql'"
 sqlite-to-postgres = "cd sqlite_to_postgres && python load_data.py"
+fake-migrate = "./movies_admin/manage.py migrate --fake movies"
+migrate = "./movies_admin/manage.py migrate"
+createsuperuser = "./movies_admin/manage.py createsuperuser"
+runserver = "./movies_admin/manage.py runserver"
