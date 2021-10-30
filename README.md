@@ -34,3 +34,21 @@ $ poetry run task open-pg-shell
 ```console
 $ poetry run task sqlite-to-postgres
 ```
+
+# movies_admin
+1. Запустить fake initial миграцию для movies:
+```console
+$ poetry run task fake-migrate
+```
+2. Запустить остальные миграции:
+```console
+$ poetry run task migrate
+```
+3. Создать суперюзера для админки:
+```console
+$ poetry run task createsuperuser
+```
+4. Запустить dev сервер:
+```console
+$ poetry run task runserver
+```
